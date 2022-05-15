@@ -12,15 +12,21 @@ const uppercase = lowerCase.map(alphabet => {
 
 // My code
 function checkLengthPrompt() {
-  let passwordLength = Number(prompt("Enter the length of the password:","Enter a number between 8 and 128"));
 
+  let passwordLength = 0;
+ 
   isValid = false;
 
   while (!isValid){
     if (!(isNaN(passwordLength) || passwordLength < 8 || passwordLength > 128)) {
       isValid = true;
     } else {
-      passwordLength = Number(prompt("Please enter a number between 8 and 128","Enter a valid number"));
+      let promptQuestion = prompt("Enter the length of the password:","Enter a number between 8 and 128");
+      if(promptQuestion === null) {
+        break;
+      }
+      passwordLength = Number(promptQuestion);
+      
     }
   }
   return passwordLength;
@@ -28,9 +34,12 @@ function checkLengthPrompt() {
 
 function generatePassword() {
   let validPasswordCharacters = [];
-  let password = ''
+  let password = '';
 
   let pwLength = checkLengthPrompt();
+  if (pwLength === 0) {
+    return;
+  }
  
   let confirmNumbers = confirm("Do you want to include numbers in your password?");
   let confirmSpecialCharacters = confirm("Do you want to include special characters in your password?");
@@ -57,7 +66,10 @@ function generatePassword() {
     password = password.concat(uppercase[Math.floor(Math.random() * uppercase.length)]);
      }
 
-  
+  console.log(pwLength, password.length);
+  for (i = (password.length);i < pwLength;i++){
+    password = password.concat(validPasswordCharacters[Math.floor(Math.random() * validPasswordCharacters.length)]);
+  }
 
    return password;
 }
