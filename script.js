@@ -4,7 +4,7 @@ var generateBtn = document.querySelector("#generate");
 
 // 
 const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8',"9",];
-const specialCharacters = [' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~',];
+const specialCharacters = ['!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~',];
 const lowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',]
 const uppercase = lowerCase.map(alphabet => {
   return alphabet.toUpperCase();
@@ -23,7 +23,8 @@ function checkLengthPrompt() {
     } else {
       let promptQuestion = prompt("Enter the length of the password:","Enter a number between 8 and 128");
       if(promptQuestion === null) {
-        break;
+
+        return 0;
       }
       passwordLength = Number(promptQuestion);
       
@@ -31,6 +32,19 @@ function checkLengthPrompt() {
   }
   return passwordLength;
 };
+
+
+/* Randomize array in-place using Durstenfeld shuffle algorithm */
+function shuffleArray(str) {
+  let array = str.split('');
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array.join('');
+}
 
 function generatePassword() {
   let validPasswordCharacters = [];
@@ -70,8 +84,10 @@ function generatePassword() {
   for (i = (password.length);i < pwLength;i++){
     password = password.concat(validPasswordCharacters[Math.floor(Math.random() * validPasswordCharacters.length)]);
   }
-
-   return password;
+  console.log(password);
+  password = shuffleArray(password);
+  console.log(password, password.length);
+  return password;
 }
 
 // Write password to the #password input
@@ -84,44 +100,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Assignment Code
-// var generateBtn = document.querySelector("#generate");
-
-// // Write password to the #password input
-// function writePassword() {
-//   var password = generatePassword();
-//   var passwordText = document.querySelector("#password");
-
-//   passwordText.value = password;
-
-// }
-
-// // Add event listener to generate button
-// generateBtn.addEventListener("click", writePassword);
