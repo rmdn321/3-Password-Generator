@@ -56,7 +56,7 @@ function generatePassword() {
   // If the password length was zero, we need to stop the password generation process
   let pwLength = checkLengthPrompt();
   if (pwLength === 0) {
-    return;
+    return 0;
   }
  
   // Getting the users preference for the password
